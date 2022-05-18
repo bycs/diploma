@@ -8,6 +8,7 @@ class CustomUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     first_name = models.CharField(max_length=30, null=True, verbose_name="Имя")
     middle_name = models.CharField(max_length=30, null=True, verbose_name="Отчество")
+    birthday = models.DateField(verbose_name="День рождения", null=True)
     last_name = models.CharField(max_length=30, null=True, verbose_name="Фамилия")
     is_verification = models.BooleanField(default=False, null=False, verbose_name="Подтвержден?")
 
