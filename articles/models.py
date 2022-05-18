@@ -1,7 +1,8 @@
+from django.contrib.auth.models import Group
 from django.db import models
 from django.urls import reverse
 
-from users.models import CustomUser, Role
+from users.models import CustomUser
 
 
 class Article(models.Model):
@@ -11,7 +12,7 @@ class Article(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated = models.DateTimeField(auto_now=True, verbose_name="Дата изменения")
     is_show = models.BooleanField(default=False, null=False, verbose_name="Показывать?")
-    author_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name="Автор")
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name="Автор")
 
     class Meta:
         ordering = ("-updated", "created")
@@ -45,31 +46,31 @@ class Category(models.Model):
 
 class CategoryArticle(models.Model):
     id = models.BigAutoField(primary_key=True)
-    article_id = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name="Статья")
-    category_id = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="Категория")
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name="Статья")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="Категория")
 
     class Meta:
         verbose_name = "Категория статьи"
         verbose_name_plural = "Категории статей"
 
     def __str__(self):
-        return self.id
+        return f"{self.article} - {self.category}"
 
     def __repr__(self):
-        return f"<CategoryArticle {self.category_id} для {self.article_id}"
+        return f"<CategoryArticle {self.category} для {self.article}"
 
 
 class AccessArticlesRule(models.Model):
     id = models.BigAutoField(primary_key=True)
-    category_id = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="Категория статьи")
-    role_id = models.ForeignKey(Role, on_delete=models.CASCADE, verbose_name="Роль пользователя")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="Категория статьи")
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, verbose_name="Роль пользователя")
 
     class Meta:
-        verbose_name = "Права доступа к статье"
-        verbose_name_plural = "Права доступа к статьям"
+        verbose_name = "Правило доступа к статье"
+        verbose_name_plural = "Правила доступа к статьям"
 
     def __str__(self):
-        return self.id
+        return f"{self.category} - {self.group}"
 
     def __repr__(self):
-        return f"<AccessArticlesRule {self.category_id} для {self.role_id}"
+        return f"<AccessArticlesRule {self.category} для {self.group}"

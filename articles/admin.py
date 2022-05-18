@@ -5,9 +5,10 @@ from django.contrib import admin
 
 class ArticleAdmin(admin.ModelAdmin):
     model = Article
-    list_display = ["title", "is_show", "author_id", "updated"]
-    list_filter = ["author_id", "is_show", "updated", "created"]
+    list_display = ["title", "is_show", "author", "updated"]
+    list_filter = ["author", "is_show", "updated", "created"]
     search_fields = ["title", "text"]
+    ordering = ("-updated",)
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -18,16 +19,16 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class CategoryArticleAdmin(admin.ModelAdmin):
     model = CategoryArticle
-    list_display = ["article_id", "category_id"]
-    list_filter = ["category_id"]
-    search_fields = ["article_id", "category_id"]
+    list_display = ["article", "category"]
+    list_filter = ["category"]
+    search_fields = ["article", "category"]
 
 
 class AccessArticlesRuleAdmin(admin.ModelAdmin):
     model = AccessArticlesRule
-    list_display = ["category_id", "role_id"]
-    list_filter = ["category_id", "role_id"]
-    search_fields = ["category_id", "role_id"]
+    list_display = ["category", "group"]
+    list_filter = ["category", "group"]
+    search_fields = ["category", "group"]
 
 
 admin.site.register(Article, ArticleAdmin)
