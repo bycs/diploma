@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Список статей{% endblock %}
+{% block content %}
+    <h1>Список статей</h1>
+    {% for article in articles %}
+        <h2>
+            <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+        </h2>
+        <p class="date">
+            Опубликовал {{ article.author_id.fullname }} {{ article.updated }}
+        </p>
+        {{ article.text|truncatewords:10|linebreaks }}
+    {% endfor %}
+{% endblock %}

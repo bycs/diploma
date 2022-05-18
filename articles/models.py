@@ -1,18 +1,20 @@
-import uuid
-
 from django.db import models
+from django.urls import reverse
 
 from users.models import CustomUser, Role
 
 
 class Article(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.BigAutoField(primary_key=True)
     title = models.CharField(max_length=30, unique=True, null=False, db_index=True, verbose_name="Заголовок")
     text = models.TextField(null=False, verbose_name="Текст статьи")
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Дата изменения")
     is_show = models.BooleanField(default=False, null=False, verbose_name="Показывать?")
     author_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name="Автор")
 
     class Meta:
+        ordering = ("-updated", "created")
         verbose_name = "Статья"
         verbose_name_plural = "Статьи"
 
@@ -21,6 +23,9 @@ class Article(models.Model):
 
     def __repr__(self):
         return f"<Article {self.title} id={self.id}"
+
+    def get_absolute_url(self):
+        return reverse("article_detail", args=[self.id])
 
 
 class Category(models.Model):

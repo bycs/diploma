@@ -5,9 +5,9 @@ from django.contrib import admin
 
 class ArticleAdmin(admin.ModelAdmin):
     model = Article
-    list_display = ["title", "author_id"]
-    list_filter = ["author_id"]
-    search_fields = ["title", "author_id"]
+    list_display = ["title", "is_show", "author_id", "updated"]
+    list_filter = ["author_id", "is_show", "updated", "created"]
+    search_fields = ["title", "text"]
 
 
 class CategoryAdmin(admin.ModelAdmin):

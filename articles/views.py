@@ -1,5 +1,27 @@
-from django.http import HttpResponse
+from articles.forms import ArticleAddForm
+from articles.models import Article
+
+from django.shortcuts import get_object_or_404, render
 
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+def articles_list(request):
+    articles = Article.objects.filter(is_show=True).all()
+    return render(request, "articles/articles_list.html", {"articles": articles})
+
+
+def article_detail(request, article_id):
+    article = get_object_or_404(Article, id=article_id, is_show=True)
+    return render(request, "articles/article.html", {"article": article})
+
+
+def article_add(request):
+    if request.method == "POST":
+        article_form = ArticleAddForm(request.POST)
+        if article_form.is_valid() and request.user.is_authenticated:
+            new_article = article_form.save(commit=False)
+            new_article.author_id = request.user
+            new_article.save()
+            return render(request, "articles/add_article_done.html", {"new_article": new_article})
+    else:
+        article_form = ArticleAddForm()
+    return render(request, "articles/add_article.html", {"article_form": article_form})
