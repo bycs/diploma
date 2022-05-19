@@ -7,7 +7,7 @@
         <h2>Личный кабинет</h2>
         <p>Добро пожаловать в личный кабинет, {{ request.user.fullname }}!</p>
 
-        {% if user.is_superuser %}
+        {% if user.is_staff %}
             <a class="link-info" href="{% url 'article_add' %}">Создать статью</a>
         {% endif %}
 
