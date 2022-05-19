@@ -10,7 +10,7 @@
                         <a class="link-primary" href="{{ article.get_absolute_url }}">{{ article.title }}</a>
                     </h4>
                     <h6 class="card-subtitle mb-2 text-muted small">
-                        Опубликовал {{ article.author.fullname }} {{ article.updated }}
+                        Опубликовал {{ article.author.full_name }} {{ article.updated }}
                     </h6>
                     <p class="card-text text-bg-danger">
                         {{ article.text|truncatewords:10|linebreaks }}

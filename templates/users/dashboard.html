@@ -5,7 +5,7 @@
 {% block content %}
     <div class="col-4">
         <h2>Личный кабинет</h2>
-        <p>Добро пожаловать в личный кабинет, {{ request.user.fullname }}!</p>
+        <p>Добро пожаловать в личный кабинет, {{ request.user.full_name }}!</p>
 
         {% if user.is_staff %}
             <a class="link-info" href="{% url 'article_add' %}">Создать статью</a>
