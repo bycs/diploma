@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Статья создана{% endblock %}
+
+{% block content %}
+    <h1>Статья <a href="{{ new_article.get_absolute_url }}">{{ new_article.title }}</a> успешно создана.</h1>
+    <p>
+        Она сейчас находится на проверке.
+        Вы можете ознакомиться с другими статьями <a href="{% url "articles_list" %}"> перейти</a>.
+    </p>
+{% endblock %}

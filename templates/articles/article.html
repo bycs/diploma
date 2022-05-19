@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{ article.title }}{% endblock %}
+{% block content %}
+    <div class="col-8">
+        <h2>{{ article.title }}</h2>
+        <p class="date">
+            Опубликовал {{ article.author.fullname }} {{ article.updated }}
+        </p>
+        {{ article.text|linebreaks }}
+    </div>
+{% endblock %}

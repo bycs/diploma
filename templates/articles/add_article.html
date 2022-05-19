@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Создание статьи{% endblock %}
+
+{% block content %}
+    <div class="col-4">
+        <h2>Создание статьи</h2>
+        <p>Заполните, пожалуйста, все поля:</p>
+        <div class="form-floating">
+            <form action="." method="post" class="form-signin">
+                {{ article_form.as_p }}
+                {% csrf_token %}
+                <button class="w-100 btn btn-primary" type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Личный кабинет{% endblock %}
+
+{% block content %}
+    <div class="col-4">
+        <h2>Личный кабинет</h2>
+        <p>Добро пожаловать в личный кабинет, {{ request.user.fullname }}!</p>
+
+        {% if user.is_superuser %}
+            <a class="link-info" href="{% url 'article_add' %}">Создать статью</a>
+        {% endif %}
+
+        <p>Проверь свои данные:</p>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th scope="row">Почта</th>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Имя</th>
+                    <td>{{ user.first_name }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Отчество</th>
+                    <td>
+                        {% if user.middle_name %}
+                            {{ user.middle_name }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Фамилия</th>
+                    <td>{{ user.last_name }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">День рождения</th>
+                    <td>{{ user.birthday }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

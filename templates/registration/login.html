@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Авторизация{% endblock %}
+{% block content %}
+    <div class="col-4">
+        <h2>Авторизация</h2>
+        {% if form.errors %}
+            <p>
+                Ваше имя пользователя и пароль не совпадают!
+                Пожалуйста, попробуйте снова.
+            </p>
+        {% else %}
+            <p>Введите, пожалуйста, данные для входа на сайт:</p>
+        {% endif %}
+        <div class="form-floating">
+            <form action="{% url 'login' %}" method="post" class="form-signin">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}"/>
+                <button class="w-100 btn btn-primary" type="submit">Войти</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

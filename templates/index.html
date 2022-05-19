@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+    <h2>Главная страница</h2>
+    <p>Добро пожаловать, {{ request.user.fullname }}, на наш портал!</p>
+    <p>Мы всегла рады тебе</p>
+{% endblock %}
