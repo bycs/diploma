@@ -1,14 +1,26 @@
 {% extends "base.html" %}
 {% block title %}Список статей{% endblock %}
 {% block content %}
-    <h1>Список статей</h1>
-    {% for article in articles %}
-        <h2>
-            <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
-        </h2>
-        <p class="date">
-            Опубликовал {{ article.author_id.fullname }} {{ article.updated }}
+    <div class="col-8">
+        <h2>Список статей</h2>
+        {% for article in articles %}
+            <div class="card" style="width: 45rem; padding: 5px">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a class="link-primary" href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                    </h4>
+                    <h6 class="card-subtitle mb-2 text-muted small">
+                        Опубликовал {{ article.author.fullname }} {{ article.updated }}
+                    </h6>
+                    <p class="card-text text-bg-danger">
+                        {{ article.text|truncatewords:10|linebreaks }}
+                    </p>
+                </div>
+            </div>
+            <br>
+        {% endfor %}
+        <p class="card-text text-bg-danger">
+            {% include "pagination.html" with page=articles %}
         </p>
-        {{ article.text|truncatewords:10|linebreaks }}
-    {% endfor %}
+    </div>
 {% endblock %}
