@@ -16,6 +16,10 @@
         <table class="table">
             <tbody>
                 <tr>
+                    <th scope="row">Телефон</th>
+                    <td>{% if user.phone %}{{ user.phone }}{% else %}-{% endif %}</td>
+                </tr>
+                <tr>
                     <th scope="row">Почта</th>
                     <td>{{ user.email }}</td>
                 </tr>
@@ -25,13 +29,7 @@
                 </tr>
                 <tr>
                     <th scope="row">Отчество</th>
-                    <td>
-                        {% if user.middle_name %}
-                            {{ user.middle_name }}
-                        {% else %}
-                            -
-                        {% endif %}
-                    </td>
+                    <td>{% if user.middle_name %}{{ user.middle_name }}{% else %}-{% endif %}</td>
                 </tr>
                 <tr>
                     <th scope="row">Фамилия</th>
@@ -39,7 +37,15 @@
                 </tr>
                 <tr>
                     <th scope="row">День рождения</th>
-                    <td>{{ user.birthday }}</td>
+                    <td>{% if user.birthday %}{{ user.birthday }}{% else %}-{% endif %}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Должность</th>
+                    <td>{% if user.position %}{{ user.position }}{% else %}-{% endif %}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Отдел</th>
+                    <td>{% if user.department %}{{ user.department }}{% else %}-{% endif %}</td>
                 </tr>
             </tbody>
         </table>
