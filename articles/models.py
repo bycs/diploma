@@ -1,14 +1,13 @@
-from django.contrib.auth.models import Group
 from django.db import models
 from django.urls import reverse
 
-from users.models import CustomUser
+from users.models import CustomGroup, CustomUser
 
 
 class Category(models.Model):
     id = models.BigAutoField(primary_key=True)
-    category_name = models.CharField(max_length=15, unique=True, null=False, verbose_name="Имя категории")
-    group_user = models.ManyToManyField(Group, verbose_name="Роль пользователя")
+    category_name = models.CharField(max_length=15, unique=True, null=False, verbose_name="Категория")
+    group_user = models.ManyToManyField(CustomGroup, verbose_name="Роль пользователя")
 
     class Meta:
         verbose_name = "Категория"
