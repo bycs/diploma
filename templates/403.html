@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}403 - доступ запрещен{% endblock %}
+
+{% block content %}
+    <div class="text-center align-top">
+        <h1 style="font-size: 142px">403</h1>
+        <h2 style="font-size: 22px">Недостаточно прав - доступ запрещен</h2>
+        <a style="font-size: 14px" href="{% url 'index' %}" class="link-dark">Войти под другим пользователем</a>
+    </div>
+{% endblock %}

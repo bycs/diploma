@@ -20,7 +20,7 @@ def articles_list(request):
     return render(request, "articles/articles_list.html", {"page": page, "articles": articles})
 
 
-def article_detail(request, article_id):
+def article_detail(request, article_id: int):
     article = get_object_or_404(Article, id=article_id, is_show=True)
     return render(request, "articles/article.html", {"article": article})
 

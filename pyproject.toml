@@ -8,6 +8,8 @@ authors = ["Stas Cartoon <bycs@mail.ru>"]
 python = "^3.10"
 Django = "4.0.4"
 psycopg2-binary = "2.9.3"
+django-phonenumber-field = "6.1.0"
+django-phonenumbers = "1.0.1"
 
 [tool.poetry.dev-dependencies]
 black = "22.3.0"

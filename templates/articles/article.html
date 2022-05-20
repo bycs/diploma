@@ -4,7 +4,7 @@
     <div class="col-8">
         <h2>{{ article.title }}</h2>
         <p class="date">
-            Опубликовал {{ article.author.fullname }} {{ article.updated }}
+            Опубликовал {{ article.author.full_name }} {{ article.updated }}
         </p>
         {{ article.text|linebreaks }}
     </div>

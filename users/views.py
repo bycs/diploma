@@ -1,10 +1,27 @@
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 
 from users.forms import UserRegistrationForm
+from users.models import CustomUser
 
 
 def dashboard(request):
-    return render(request, "users/dashboard.html", {"section": "dashboard"})
+    return render(request, "users/dashboard.html")
+
+
+def users_list(request):
+    users = CustomUser.objects.filter(is_verification=True).order_by("last_name", "first_name", "middle_name").all()
+    paginator = Paginator(users, 10)
+    page = request.GET.get("page")
+
+    try:
+        users = paginator.page(page)
+    except PageNotAnInteger:
+        users = paginator.page(1)
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
+
+    return render(request, "users/users_list.html", {"page": page, "users": users})
 
 
 def register(request):
@@ -18,3 +35,11 @@ def register(request):
     else:
         user_form = UserRegistrationForm()
     return render(request, "registration/register.html", {"user_form": user_form})
+
+
+def error_403(request):
+    return render(request, "403.html")
+
+
+def error_404(request):
+    return render(request, "404.html")
