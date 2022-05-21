@@ -3,7 +3,7 @@
 {% block title %}Личный кабинет{% endblock %}
 
 {% block content %}
-    <div class="col-4">
+    <div class="col-7">
         <h2>Личный кабинет</h2>
         <p>Добро пожаловать в личный кабинет, {{ request.user.full_name }}!</p>
 
@@ -46,6 +46,14 @@
                 <tr>
                     <th scope="row">Отдел</th>
                     <td>{% if user.department %}{{ user.department }}{% else %}-{% endif %}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Роли</th>
+                    <td>{% if user.get_all_role_names %}
+                        {% for role in user.get_all_role_names %}
+                            {{ role }}
+                        {% endfor %}
+                    {% else %}-{% endif %}</td>
                 </tr>
             </tbody>
         </table>

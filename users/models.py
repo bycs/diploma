@@ -41,6 +41,12 @@ class CustomGroup(Group):
         verbose_name = "Роль пользователя"
         verbose_name_plural = "Роли пользователей"
 
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return f"<Group {self.name} id={self.id}>"
+
 
 class CustomUser(AbstractUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -71,3 +77,11 @@ class CustomUser(AbstractUser, PermissionsMixin):
 
     def __repr__(self):
         return f"<User {self.username}: {self.full_name}>"
+
+    def get_all_role_names(self):
+        roles = self.role.values_list("name", flat=True)
+        roles_set = set(roles)
+        return roles_set
+
+    def get_all_categories_for_user(self):
+        pass

@@ -16,7 +16,7 @@ class CategoryAdmin(admin.ModelAdmin):
     model = Category
     list_display = ("category_name",)
     search_fields = ("category_name",)
-    filter_horizontal = ("group_user",)
+    filter_horizontal = ("role_user",)
 
 
 admin.site.register(Article, ArticleAdmin)

@@ -7,7 +7,7 @@ from users.models import CustomGroup, CustomUser
 class Category(models.Model):
     id = models.BigAutoField(primary_key=True)
     category_name = models.CharField(max_length=15, unique=True, null=False, verbose_name="Категория")
-    group_user = models.ManyToManyField(CustomGroup, verbose_name="Роль пользователя")
+    role_user = models.ManyToManyField(CustomGroup, verbose_name="Роль пользователя")
 
     class Meta:
         verbose_name = "Категория"
@@ -43,3 +43,10 @@ class Article(models.Model):
 
     def get_absolute_url(self):
         return reverse("article_detail", args=[self.id])
+
+    def get_all_access_roles(self):
+        categories = self.category.all()
+        roles = set()
+        for category in categories:
+            roles = roles | set(category.role_user.values_list("name", flat=True))
+        return roles
