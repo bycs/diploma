@@ -18,7 +18,7 @@ class Department(models.Model):
         return self.department_name
 
     def __repr__(self):
-        return f"<Department {self.department_name} id={self.id}"
+        return f"<Department {self.department_name} id={self.id}>"
 
 
 class Position(models.Model):
@@ -33,7 +33,7 @@ class Position(models.Model):
         return self.position_name
 
     def __repr__(self):
-        return f"<Position {self.position_name} id={self.id}"
+        return f"<Position {self.position_name} id={self.id}>"
 
 
 class CustomGroup(Group):

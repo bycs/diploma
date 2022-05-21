@@ -17,7 +17,7 @@ class Category(models.Model):
         return self.category_name
 
     def __repr__(self):
-        return f"<Category {self.category_name} id={self.id}"
+        return f"<Category {self.category_name} id={self.id}>"
 
 
 class Article(models.Model):
@@ -39,7 +39,7 @@ class Article(models.Model):
         return self.title
 
     def __repr__(self):
-        return f"<Article {self.title} id={self.id}"
+        return f"<Article {self.title} id={self.id}>"
 
     def get_absolute_url(self):
         return reverse("article_detail", args=[self.id])
