@@ -5,9 +5,11 @@ from users.models import CustomGroup, CustomUser
 
 
 class Category(models.Model):
+    """Модель категорий статьи."""
+
     id = models.BigAutoField(primary_key=True)
     category_name = models.CharField(max_length=15, unique=True, null=False, verbose_name="Категория")
-    group_user = models.ManyToManyField(CustomGroup, verbose_name="Роль пользователя")
+    role_user = models.ManyToManyField(CustomGroup, verbose_name="Роль пользователя")
 
     class Meta:
         verbose_name = "Категория"
@@ -17,10 +19,12 @@ class Category(models.Model):
         return self.category_name
 
     def __repr__(self):
-        return f"<Category {self.category_name} id={self.id}"
+        return f"<Category {self.category_name} id={self.id}>"
 
 
 class Article(models.Model):
+    """Модель статей."""
+
     id = models.BigAutoField(primary_key=True)
     title = models.CharField(max_length=30, unique=True, null=False, db_index=True, verbose_name="Заголовок")
     text = models.TextField(null=False, verbose_name="Текст статьи")
@@ -39,7 +43,19 @@ class Article(models.Model):
         return self.title
 
     def __repr__(self):
-        return f"<Article {self.title} id={self.id}"
+        return f"<Article {self.title} id={self.id}>"
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
+        """Метод, который возвращает абсолютный адрес статьи."""
+
         return reverse("article_detail", args=[self.id])
+
+    def get_all_access_roles(self) -> set:
+        """Метод, который возращает множество ролей пользователя,
+        которые имею доступ к статье."""
+
+        categories = self.category.all()
+        roles = set()
+        for category in categories:
+            roles = roles | set(category.role_user.values_list("name", flat=True))
+        return roles

@@ -7,6 +7,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Department(models.Model):
+    """Модель отделов сотрудников"""
+
     id = models.BigAutoField(primary_key=True)
     department_name = models.CharField(max_length=50, unique=True, null=False, verbose_name="Отдел")
 
@@ -18,10 +20,12 @@ class Department(models.Model):
         return self.department_name
 
     def __repr__(self):
-        return f"<Department {self.department_name} id={self.id}"
+        return f"<Department {self.department_name} id={self.id}>"
 
 
 class Position(models.Model):
+    """Модель должностей сотрудников"""
+
     id = models.BigAutoField(primary_key=True)
     position_name = models.CharField(max_length=30, unique=True, null=False, verbose_name="Должность")
 
@@ -33,16 +37,26 @@ class Position(models.Model):
         return self.position_name
 
     def __repr__(self):
-        return f"<Position {self.position_name} id={self.id}"
+        return f"<Position {self.position_name} id={self.id}>"
 
 
 class CustomGroup(Group):
+    """Модель ролей сотрудников"""
+
     class Meta:
         verbose_name = "Роль пользователя"
         verbose_name_plural = "Роли пользователей"
 
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return f"<Role {self.name} id={self.id}>"
+
 
 class CustomUser(AbstractUser, PermissionsMixin):
+    """Модель сотрудников"""
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     first_name = models.CharField(max_length=30, null=True, verbose_name="Имя")
     middle_name = models.CharField(max_length=30, blank=True, null=True, verbose_name="Отчество")
@@ -71,3 +85,10 @@ class CustomUser(AbstractUser, PermissionsMixin):
 
     def __repr__(self):
         return f"<User {self.username}: {self.full_name}>"
+
+    def get_all_role_names(self):
+        """Формирует множество из ролей пользователя"""
+
+        roles = self.role.values_list("name", flat=True)
+        roles_set = set(roles)
+        return roles_set
