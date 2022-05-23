@@ -35,9 +35,11 @@ def articles_list(request):
 
 
 def article_detail(request, article_id: int):
+    """Открывает выбранную статью."""
+
     article = get_object_or_404(Article, id=article_id, is_show=True)
 
-    if request.user.is_superuser or request.user.is_staff:
+    if user_is_staff(request):
         has_access = True
     else:
         current_user = get_user(request)
@@ -53,6 +55,8 @@ def article_detail(request, article_id: int):
 
 @staff_required
 def article_add(request):
+    """Открывает страницу создания новых статей."""
+
     if request.method == "POST":
         article_form = ArticleAddForm(request.POST)
         if article_form.is_valid() and request.user.is_authenticated:

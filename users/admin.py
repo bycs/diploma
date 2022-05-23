@@ -7,10 +7,12 @@ from users.models import CustomGroup, CustomUser, Department, Position
 
 class DepartmentAdmin(admin.ModelAdmin):
     model = Department
+    search_fields = ("department_name",)
 
 
 class PositionAdmin(admin.ModelAdmin):
     model = Position
+    search_fields = ("position_name",)
 
 
 class CustomUserAdmin(UserAdmin):
