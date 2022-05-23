@@ -12,6 +12,7 @@ class Category(models.Model):
     role_user = models.ManyToManyField(CustomGroup, verbose_name="Роль пользователя")
 
     class Meta:
+        ordering = ("category_name",)
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
 
@@ -26,16 +27,16 @@ class Article(models.Model):
     """Модель статей."""
 
     id = models.BigAutoField(primary_key=True)
-    title = models.CharField(max_length=30, unique=True, null=False, db_index=True, verbose_name="Заголовок")
+    title = models.CharField(max_length=50, unique=True, null=False, db_index=True, verbose_name="Заголовок")
     text = models.TextField(null=False, verbose_name="Текст статьи")
     created = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated = models.DateTimeField(auto_now=True, verbose_name="Дата изменения")
     is_show = models.BooleanField(default=False, null=False, verbose_name="Показывать?")
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name="Автор")
+    author = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, verbose_name="Автор")
     category = models.ManyToManyField(Category, verbose_name="Категория")
 
     class Meta:
-        ordering = ("-updated", "created")
+        ordering = ("-updated", "-created")
         verbose_name = "Статья"
         verbose_name_plural = "Статьи"
 
