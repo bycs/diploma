@@ -1,16 +1,26 @@
 from articles.forms import ArticleAddForm
-from articles.models import Article
+from articles.models import Article, Category
 
 from django.contrib.auth import get_user
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404, render
 
-from users.decorators import staff_required
+from users.decorators import staff_required, user_is_staff
+from users.models import CustomGroup
 
 
 def articles_list(request):
-    articles = Article.objects.filter(is_show=True).all()
+    """Формирует список доступных для текущего пользователя статей."""
+
+    if user_is_staff(request):
+        articles = Article.objects.filter(is_show=True)
+    else:
+        current_user = get_user(request)
+        roles_user = CustomGroup.objects.filter(customuser=current_user).distinct()
+        categories_for_user = Category.objects.filter(role_user__category__role_user__in=roles_user).distinct()
+        articles = Article.objects.filter(is_show=True, category__article__category__in=categories_for_user).distinct()
+
     paginator = Paginator(articles, 5)
     page = request.GET.get("page")
 
