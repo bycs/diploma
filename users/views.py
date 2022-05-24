@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 
@@ -5,12 +6,14 @@ from users.forms import UserRegistrationForm
 from users.models import CustomUser
 
 
+@login_required
 def dashboard(request):
     """Формирует личный кабинет сотрудника."""
 
     return render(request, "users/dashboard.html")
 
 
+@login_required
 def users_list(request):
     """Формирует справочник сотрудников."""
 
