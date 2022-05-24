@@ -1,7 +1,8 @@
 import os
 
-DEBUG = os.getenv("DEBUG", False)
+DEBUG = int(os.getenv("DEBUG", 0))
 APP_SECRET_KEY = os.getenv("APP_SECRET_KEY", "xxx")
+APP_ALLOWED_HOSTS = os.getenv("APP_ALLOWED_HOSTS", "localhost").split(" ")
 
 DB_USER = os.getenv("POSTGRES_USER", "user")
 DB_PASSWORD = os.getenv("POSTGRES_PASSWORD", "pass")
