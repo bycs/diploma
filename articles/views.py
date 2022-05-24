@@ -2,6 +2,7 @@ from articles.forms import ArticleAddForm
 from articles.models import Article, Category
 
 from django.contrib.auth import get_user
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404, render
@@ -10,6 +11,7 @@ from users.decorators import staff_required, user_is_staff
 from users.models import CustomGroup
 
 
+@login_required
 def articles_list(request):
     """Формирует список доступных для текущего пользователя статей."""
 
@@ -34,6 +36,7 @@ def articles_list(request):
     return render(request, "articles/articles_list.html", {"page": page, "articles": articles})
 
 
+@login_required
 def article_detail(request, article_id: int):
     """Открывает выбранную статью."""
 
